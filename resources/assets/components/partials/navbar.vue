@@ -2,7 +2,7 @@
     <nav class="metro-nav navbar navbar-expand navbar-light navbar-laravel sticky-top shadow-none py-1">
         <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="/i/web" title="Logo">
-                    <img :src="config.logo" height="30px" class="px-2" loading="eager" alt="Pixelfed logo">
+                    <img :src="config.logo" style="max-height: 34px; max-width: 150px; width: auto; height: auto; object-fit: contain;" class="mr-2" loading="eager" alt="Logo">
                     <span class="font-weight-bold mb-0 d-none d-sm-block" style="font-size:20px;">
                         {{ brandName }}
                     </span>

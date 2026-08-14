@@ -28,6 +28,14 @@ body {
 		align-items: center;
 		gap: 10px;
 
+		img {
+			max-height: 40px;
+			max-width: 160px;
+			width: auto !important;
+			height: auto !important;
+			object-fit: contain;
+		}
+
 		span {
 			font-weight: bold;
 			font-size: 14px;

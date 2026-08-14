@@ -28,7 +28,7 @@ class SiteController extends Controller
 
     public function homeGuest()
     {
-        return view('site.index');
+        return redirect('/login');
     }
 
     public function homeTimeline(Request $request)

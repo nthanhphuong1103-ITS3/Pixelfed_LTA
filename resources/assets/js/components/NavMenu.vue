@@ -3,7 +3,7 @@
 		<nav class="navbar navbar-expand navbar-light navbar-laravel shadow-none border-bottom sticky-top py-1">
 			<div class="container">
 				<a class="navbar-brand d-flex align-items-center" href="/" title="Logo">
-					<img :src="config.logo" height="30px" class="px-2" loading="eager">
+					<img :src="config.logo" style="max-height: 34px; max-width: 150px; width: auto; height: auto; object-fit: contain;" class="mr-2" loading="eager">
 					<span class="font-weight-bold mb-0 d-none d-sm-block" style="font-size:20px;">{{ config.site.name }}</span>
 				</a>
 				<div v-if="loaded && loggedIn" class="collapse navbar-collapse">
