@@ -1391,22 +1391,14 @@ export default {
                     axios.post('/api/compose/v0/publish', data)
                     .then(res => {
                         $('#composeModal').modal('hide');
+                        this.$emit('close');
+                        if (this.$router) {
+                            this.$router.push('/i/web');
+                        }
                         window.location.href = '/i/web';
                     }).catch(err => {
-                        switch(err.response.status) {
-                            case 400:
-                                if (err.response.data.error == "Must contain a single photo or video or multiple photos.") {
-                                    swal("Wrong types of mixed media", "The album must contain a single photo or video or multiple photos.", 'error');
-                                }
-                                else {
-                                    this.defineErrorMessage(err);
-                                }
-                            break;
-
-                            default:
-                                this.defineErrorMessage(err);
-                            break;
-                        }
+                        let msg = err.response && err.response.data && err.response.data.message ? err.response.data.message : 'Có lỗi xảy ra trong quá trình đăng bài. Vui lòng kiểm tra lại.';
+                        swal('Lỗi!', msg, 'error');
                     }).finally(() => {
                         this.isPosting = false;
                     });
@@ -1446,10 +1438,14 @@ export default {
                     axios.post('/api/compose/v0/publish/text', data)
                     .then(res => {
                         $('#composeModal').modal('hide');
+                        this.$emit('close');
+                        if (this.$router) {
+                            this.$router.push('/i/web');
+                        }
                         window.location.href = '/i/web';
                     }).catch(err => {
-                        let msg = err.response.data.message ? err.response.data.message : 'An unexpected error occured.'
-                        swal('Oops, something went wrong!', msg, 'error');
+                        let msg = err.response && err.response.data && err.response.data.message ? err.response.data.message : 'Có lỗi xảy ra khi đăng bài.';
+                        swal('Lỗi!', msg, 'error');
                     });
                     return;
                 break;
