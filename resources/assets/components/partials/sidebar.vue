@@ -17,11 +17,11 @@
                         <p class="display-name" v-html="getDisplayName()"></p>
                         <p class="username primary">&commat;{{ user.username }}</p>
                         <p class="stats">
-							<span class="stats-following">
-								<span class="following-count">{{ formatCount(user.following_count) }}</span> Following
+							<span class="stats-following cursor-pointer" @click="gotoFollowing()" title="Xem danh sách đang theo dõi">
+								<span class="following-count">{{ formatCount(user.following_count) }}</span> {{ $t('profile.following') || 'Đang theo dõi' }}
 							</span>
-                            <span class="stats-followers">
-								<span class="followers-count">{{ formatCount(user.followers_count) }}</span> Followers
+                            <span class="stats-followers cursor-pointer" @click="gotoFollowers()" title="Xem danh sách người theo dõi">
+								<span class="followers-count">{{ formatCount(user.followers_count) }}</span> {{ $t('profile.followers') || 'Người theo dõi' }}
 							</span>
 						</p>
 					</div>
@@ -104,6 +104,13 @@
                     <router-link class="nav-link" to="/i/web/discover">
                         <span class="icon text-lighter"><i class="far fa-compass"></i></span>
                         {{ $t('navmenu.discover') }}
+                    </router-link>
+                </li>
+
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/i/web/discover/find-friends">
+                        <span class="icon text-primary"><i class="fas fa-user-plus"></i></span>
+                        <span class="font-weight-bold">Thêm người theo dõi</span>
                     </router-link>
                 </li>
 

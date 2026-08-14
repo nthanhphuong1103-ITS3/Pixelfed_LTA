@@ -4,51 +4,40 @@
 			<router-link class="btn btn-primary primary btn-sm rounded-pill font-weight-bold btn-block" to="/i/web/whats-new"><i class="fal fa-exclamation-circle mr-1"></i> New in Metro UI 2</router-link>
 		</p> -->
 
-		<notifications :profile="profile" />
-
-		<!-- <div class="d-none card shadow-sm mb-3" style="border-radius: 15px;">
-			<div class="card-body">
-				<div class="d-flex justify-content-between">
-					<p class="text-muted">{{ $t('timeline.peopleYouMayKnow') }}</p>
-					<p class="text-lighter"><i class="far fa-cog"></i></p>
+		<div class="card shadow-sm mb-3 border-0" style="border-radius: 15px; background: #ffffff;">
+			<div class="card-body p-3">
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<p class="font-weight-bold text-dark mb-0" style="font-size: 15px;">Gợi ý theo dõi</p>
+					<router-link to="/i/web/discover/find-friends" class="small font-weight-bold text-primary">Xem tất cả</router-link>
 				</div>
 
-				<div class="media-list mb-n4">
-					<div v-for="(account, index) in recommended" class="media align-items-center mb-3">
-						<img :src="account.avatar" class="avatar shadow-sm mr-3" width="40" height="40">
-						<div class="media-body">
-							<p class="lead font-weight-bold username primary">&commat;{{ account.username }}</p>
-							<p class="text-muted mb-0 display-name">{{ account.display_name }}</p>
+				<div v-if="loadingRecommended" class="text-center py-2">
+					<b-spinner small type="grow" class="text-primary" />
+				</div>
+
+				<div v-else-if="recommended.length" class="media-list">
+					<div v-for="(account, index) in recommended" :key="'rec:' + account.id" class="media align-items-center mb-3">
+						<img :src="account.avatar || account.avatarUrl" class="avatar shadow-sm mr-2 cursor-pointer" width="38" height="38" style="border-radius:50%;object-fit:cover;" @click="gotoProfile(account.id)" onerror="this.onerror=null;this.src='/storage/avatars/default.png?v=0';">
+						<div class="media-body overflow-hidden cursor-pointer" @click="gotoProfile(account.id)">
+							<p class="font-weight-bold text-dark mb-0 text-truncate" style="font-size: 13px;line-height:1.2;">{{ account.display_name || account.name || account.username }}</p>
+							<p class="text-muted mb-0 small text-truncate" style="font-size: 11px;">&commat;{{ account.username }}</p>
 						</div>
 
-						<button class="btn btn-primary btn-sm follow">
-							{{ $t('profile.follow') }}
+						<button v-if="!account.following" class="btn btn-primary btn-sm font-weight-bold ml-2 rounded-pill px-3 py-1" style="font-size: 12px;" @click="follow(account, index)">
+							Theo dõi
+						</button>
+						<button v-else class="btn btn-outline-secondary btn-sm font-weight-bold ml-2 rounded-pill px-2 py-1" style="font-size: 11px;" @click="unfollow(account, index)">
+							Đang theo dõi
 						</button>
 					</div>
+				</div>
+				<div v-else class="text-center text-muted small py-2">
+					Không có gợi ý mới
 				</div>
 			</div>
 		</div>
 
-		<div class="d-none card shadow-sm mb-3" style="border-radius: 15px;">
-			<div class="card-body">
-				<div class="d-flex justify-content-between">
-					<p class="text-muted">Trending</p>
-					<p class="text-lighter"><i class="far fa-cog"></i></p>
-				</div>
-
-				<div class="media-list row mb-n3">
-					<div v-for="(post, index) in trending" class="col-6 mb-1 p-1">
-						<img :src="post.url" width="100%" height="100" class="bg-white p-1 shadow-sm" style="object-fit: cover;border-radius: 15px;">
-					</div>
-
-					<div class="col-6 mb-1 p-1 d-flex justify-content-center align-items-center">
-						<button class="btn btn-link text-dark">
-							<i class="fal fa-plus-circle fa-lg"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div> -->
+		<notifications :profile="profile" />
 	</div>
 </template>
 
@@ -63,11 +52,46 @@
 		data() {
 			return {
 				profile: {},
+				recommended: [],
+				loadingRecommended: true,
 			}
 		},
 
 		mounted() {
 			this.profile = window._sharedData.user;
+			this.fetchRecommended();
+		},
+
+		methods: {
+			fetchRecommended() {
+				this.loadingRecommended = true;
+				axios.get('/api/pixelfed/discover/accounts/popular')
+				.then(res => {
+					this.recommended = res.data ? res.data.slice(0, 5) : [];
+					this.loadingRecommended = false;
+				})
+				.catch(() => {
+					this.loadingRecommended = false;
+				});
+			},
+
+			follow(account, index) {
+				axios.post('/api/v1/accounts/' + account.id + '/follow')
+				.then(() => {
+					this.$set(this.recommended[index], 'following', true);
+				});
+			},
+
+			unfollow(account, index) {
+				axios.post('/api/v1/accounts/' + account.id + '/unfollow')
+				.then(() => {
+					this.$set(this.recommended[index], 'following', false);
+				});
+			},
+
+			gotoProfile(id) {
+				this.$router.push('/i/web/profile/' + id);
+			}
 		}
 	}
 </script>

@@ -10,7 +10,7 @@
 				<div class="col-md-6 col-lg-6">
 					<b-breadcrumb class="font-default" :items="breadcrumbItems"></b-breadcrumb>
 
-					<h1 class="font-default">Find Friends</h1>
+					<h1 class="font-default">Gợi ý người theo dõi</h1>
 					<!-- <p class="font-default lead">Posts from hashtags you follow</p> -->
 					<hr>
 
@@ -62,11 +62,11 @@ export default {
 			popularLoaded: false,
 			breadcrumbItems: [
 				{
-					text: 'Discover',
+					text: 'Khám phá',
 					href: '/i/web/discover'
 				},
 				{
-					text: 'Find Friends',
+					text: 'Gợi ý người theo dõi',
 					active: true
 				}
 			]
@@ -79,17 +79,7 @@ export default {
 
 	methods: {
 		fetchConfig() {
-			axios.get('/api/pixelfed/v2/discover/meta')
-			.then(res => {
-				if(res.data.friends.enabled == false) {
-					this.$router.push('/i/web/discover');
-				} else {
-					this.fetchPopularAccounts();
-				}
-			})
-			.catch(e => {
-				this.isLoading = false;
-			})
+			this.fetchPopularAccounts();
 		},
 
 		fetchPopular() {
