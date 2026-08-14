@@ -25,3 +25,12 @@
 
 :root { --primary: #0072ce; --primary-hover: #0052a3; } .btn-primary { background-color: #0072ce !important; border-color: #0072ce !important; color: #fff !important; } .btn-primary:hover { background-color: #0052a3 !important; border-color: #0052a3 !important; }
 
+
+/* Force Bright Blue & White Light Theme */
+:root, [data-stylesheet="dark"], .force-dark-mode, body, body.loggedIn { --primary: #0072ce !important; --primary-hover: #0052a3 !important; --body-bg: #f8fafc !important; --body-color: #0f172a !important; --nav-bg: #ffffff !important; --bg-light: #f1f5f9 !important; --light-gray: #f1f5f9 !important; --text-lighter: #64748b !important; --card-bg: #ffffff !important; --light-hover-bg: #f8fafc !important; --btn-light-border: #cbd5e1 !important; --input-border: #cbd5e1 !important; --comment-bg: #f1f5f9 !important; --border-color: #e2e8f0 !important; --card-header-accent: #f8fafc !important; background-color: #f8fafc !important; color: #0f172a !important; }
+body, body.loggedIn, #content, .web-wrapper, .metro-nav, .card, .navbar-laravel { background-color: #f8fafc !important; color: #0f172a !important; }
+.card, .metro-nav.flex-column, .navbar-laravel, .dropdown-menu { background-color: #ffffff !important; border-color: #e2e8f0 !important; color: #0f172a !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important; }
+.text-dark, a.text-dark, .navbar-light .navbar-brand { color: #0f172a !important; }
+.btn-primary, .badge-primary { background-color: #0072ce !important; border-color: #0072ce !important; color: #ffffff !important; }
+.btn-primary:hover { background-color: #0052a3 !important; border-color: #0052a3 !important; }
+
