@@ -211,9 +211,39 @@
 									<span class="sr-only">Loading...</span>
 								</div>
 							</div>
-							<div v-else class="card-body flex-grow-0 py-1">
-								<div v-if="loaded && user.hasOwnProperty('id')" class="reactions my-2 pb-1 d-flex justify-content-between">
-									<h3 v-bind:class="[reactions.liked ? 'fas fa-heart text-danger mr-3 m-0 cursor-pointer' : 'far fa-heart pr-3 m-0 like-btn cursor-pointer']" title="Like" v-on:click="likeStatus"></h3>
+								<div v-if="loaded && user.hasOwnProperty('id')" class="reactions my-2 pb-1 d-flex align-items-center">
+									<div class="reaction-bar-container mr-2" @mouseleave="showReactionPicker = false">
+										<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+											<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction('heart', $event)">❤️</button>
+											<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction('like', $event)">👍</button>
+											<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction('haha', $event)">😆</button>
+											<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction('sad', $event)">😢</button>
+											<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction('angry', $event)">😡</button>
+											<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction('unlike', $event)">🚫</button>
+										</div>
+
+										<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">
+											<span v-if="currentReaction == 'heart' || (reactions.liked && !currentReaction)" class="text-danger">
+												<i class="fas fa-heart mr-1"></i> Tim
+											</span>
+											<span v-else-if="currentReaction == 'like'" class="text-primary">
+												<i class="fas fa-thumbs-up mr-1"></i> Thích
+											</span>
+											<span v-else-if="currentReaction == 'haha'">
+												<span class="mr-1">😆</span> Haha
+											</span>
+											<span v-else-if="currentReaction == 'sad'">
+												<span class="mr-1">😢</span> Buồn
+											</span>
+											<span v-else-if="currentReaction == 'angry'">
+												<span class="mr-1">😡</span> Giận
+											</span>
+											<span v-else class="text-dark">
+												<i class="far fa-heart mr-1"></i> Thích
+											</span>
+										</button>
+									</div>
+
 									<h3 v-if="!status.comments_disabled" class="far fa-comment mr-3 m-0 cursor-pointer" title="Comment" v-on:click="replyFocus(status)"></h3>
 								 <h3 @click="redirect(status.media_attachments[0].url)" class="fas fa-expand m-0 mr-3 cursor-pointer"></h3>
 									 <!-- <h3 v-if="status.visibility == 'public'" v-bind:class="[reactions.bookmarked ? 'fas fa-bookmark text-warning m-0 float-right cursor-pointer' : 'far fa-bookmark m-0 float-right cursor-pointer']" title="Bookmark" v-on:click="bookmarkStatus"></h3> -->
@@ -622,6 +652,8 @@ export default {
 						liked: false,
 						shared: false
 					},
+					showReactionPicker: false,
+					currentReaction: null,
 					likes: [],
 					likesCursor: null,
 					likesCanLoadMore: true,
@@ -873,6 +905,25 @@ export default {
 						$state.complete();
 					}
 				});
+			},
+
+			togglePicker() {
+				this.showReactionPicker = !this.showReactionPicker;
+			},
+
+			setReaction(type, event) {
+				this.showReactionPicker = false;
+				let isUnlike = type === 'unlike';
+				this.currentReaction = isUnlike ? null : type;
+				if (isUnlike) {
+					if (this.reactions.liked) {
+						this.likeStatus(event);
+					}
+				} else {
+					if (!this.reactions.liked) {
+						this.likeStatus(event);
+					}
+				}
 			},
 
 			likeStatus(event) {
