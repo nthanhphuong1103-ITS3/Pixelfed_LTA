@@ -62,14 +62,13 @@
   @endswitch
   <div class="card-body">
     <div class="reactions my-1">
-      <div class="d-inline-flex reaction-bar-container pr-3" onmouseleave="this.querySelector('.reaction-popover-bar').style.display='none'">
-        <div class="reaction-popover-bar shadow-lg rounded-pill" style="display:none;">
+      <div class="d-inline-flex reaction-bar-container pr-3">
+        <div class="reaction-popover-bar shadow-lg rounded-pill">
           <button type="button" class="btn btn-reaction" title="Tim ❤️" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">❤️</button>
           <button type="button" class="btn btn-reaction" title="Thích 👍" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">👍</button>
           <button type="button" class="btn btn-reaction" title="Haha 😆" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😆</button>
           <button type="button" class="btn btn-reaction" title="Buồn 😢" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😢</button>
           <button type="button" class="btn btn-reaction" title="Giận 😡" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😡</button>
-          <button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">🚫</button>
         </div>
         <form class="like-form" method="post" action="/i/like" style="display: inline;" data-id="{{$item->id}}" data-action="like" data-count="{{$item->likes_count}}">
           @csrf

@@ -65,7 +65,14 @@
 													<a class="text-dark font-weight-bold mr-1 text-break" :href="profileUrl(reply)" v-bind:title="reply.account.username">{{trimCaption(reply.account.username,15)}}</a>
 													<span class="text-break comment-body" style="word-break: break-all;" v-html="reply.content"></span>
 												</span>
-												<span class="text-right" style="min-width: 30px;">
+												<span class="text-right reaction-bar-container" style="min-width: 30px;">
+													<span class="reaction-popover-bar shadow-lg rounded-pill">
+														<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="likeReply(reply, $event)">❤️</button>
+														<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="likeReply(reply, $event)">👍</button>
+														<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="likeReply(reply, $event)">😆</button>
+														<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="likeReply(reply, $event)">😢</button>
+														<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="likeReply(reply, $event)">😡</button>
+													</span>
 													<span v-on:click="likeReply(reply, $event)"><i v-bind:class="[reply.favourited ? 'fas fa-heart fa-sm text-danger':'far fa-heart fa-sm text-lighter']"></i></span>
 													<span class="pl-2 text-lighter cursor-pointer" @click="ctxMenu(reply)">
 														<span class="fas fa-ellipsis-v text-lighter"></span>

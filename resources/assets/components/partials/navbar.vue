@@ -170,15 +170,18 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <router-link class="nav-link text-center" to="/i/web">
                                                     <div class="icon text-lighter"><i class="far fa-home fa-lg"></i></div>
-                                                    <div class="small">{{ $t('navmenu.homeFeed') }}</div>
+                                                    <div class="small">Trang chính</div>
                                                 </router-link>
 
-                                                <router-link v-if="hasLocalTimeline" class="nav-link text-center" :to="{ name: 'timeline', params: { scope: 'local' } }">
-                                                    <div class="icon text-lighter"><i class="fas fa-stream fa-lg"></i></div>
-                                                    <div class="small">{{ $t('navmenu.localFeed') }}</div>
+                                                <router-link class="nav-link text-center" to="/i/web/compose">
+                                                    <div class="icon text-lighter"><i class="far fa-plus-square fa-lg"></i></div>
+                                                    <div class="small">Bài đăng</div>
                                                 </router-link>
 
-<!-- globalFeed (Liên hợp) tab removed per user request -->
+                                                <router-link class="nav-link text-center" to="/i/web/notifications">
+                                                    <div class="icon text-lighter"><i class="far fa-bell fa-lg"></i></div>
+                                                    <div class="small">Thông báo</div>
+                                                </router-link>
                                             </div>
                                         </li>
 

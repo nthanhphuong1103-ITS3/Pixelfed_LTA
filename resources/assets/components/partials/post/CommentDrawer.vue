@@ -168,12 +168,21 @@
 							</div>
 
 							<p class="media-body-reactions">
-								<button
-									class="btn btn-link font-weight-bold btn-sm p-0"
-									:class="[ post.favourited ? 'primary' : 'text-muted' ]"
-									@click="likeComment(idx)">
-									{{ post.favourited ? 'Liked' : 'Like' }}
-								</button>
+								<span class="reaction-bar-container mr-1">
+									<span class="reaction-popover-bar shadow-lg rounded-pill">
+										<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="likeComment(idx)">❤️</button>
+										<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="likeComment(idx)">👍</button>
+										<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="likeComment(idx)">😆</button>
+										<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="likeComment(idx)">😢</button>
+										<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="likeComment(idx)">😡</button>
+									</span>
+									<button
+										class="btn btn-link font-weight-bold btn-sm p-0"
+										:class="[ post.favourited ? 'primary' : 'text-muted' ]"
+										@click="likeComment(idx)">
+										{{ post.favourited ? 'Liked' : 'Like' }}
+									</button>
+								</span>
 								<template v-if="post.visibility != 'public'">
 									<span class="mx-1">·</span>
 									<span

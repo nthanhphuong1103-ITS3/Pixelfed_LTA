@@ -29,7 +29,6 @@
 					<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction('haha')">😆</button>
 					<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction('sad')">😢</button>
 					<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction('angry')">😡</button>
-					<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction('unlike')">🚫</button>
 				</div>
 
 				<button type="button" class="btn btn-light font-weight-bold rounded-pill mr-2">

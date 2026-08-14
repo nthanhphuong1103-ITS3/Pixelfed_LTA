@@ -55,10 +55,6 @@
 			<ul class="nav flex-column">
 				<li class="nav-item">
 					<div class="d-flex justify-content-between align-items-center">
-						<!-- <router-link class="nav-link text-center" to="/i/web">
-							<div class="icon text-lighter"><i class="far fa-home fa-lg"></i></div>
-							<div class="small">{{ $t('navmenu.homeFeed') }}</div>
-						</router-link> -->
                         <a
                             class="nav-link text-center"
                             href="/i/web"
@@ -68,10 +64,6 @@
                             <div class="small">{{ $t('navmenu.homeFeed') }}</div>
                         </a>
 
-                        <!-- <router-link v-if="hasLocalTimeline" class="nav-link text-center" :to="{ name: 'timeline', params: { scope: 'local' } }">
-                            <div class="icon text-lighter"><i class="fas fa-stream fa-lg"></i></div>
-                            <div class="small">{{ $t('navmenu.localFeed') }}</div>
-                        </router-link> -->
                         <a
                             v-if="hasLocalTimeline"
                             class="nav-link text-center"
@@ -82,7 +74,13 @@
                             <div class="small">{{ $t('navmenu.localFeed') }}</div>
                         </a>
 
-                        <!-- globalFeed (Liên hợp) tab removed per user request -->
+                        <router-link
+                            class="nav-link text-center"
+                            to="/i/web/notifications"
+                            :class="[ $route.path == '/i/web/notifications' ? 'router-link-exact-active active' : '' ]">
+                            <div class="icon text-lighter"><i class="far fa-bell fa-lg"></i></div>
+                            <div class="small">{{ $t('navmenu.notifications') }}</div>
+                        </router-link>
                     </div>
                     <hr class="mb-0" style="margin-top: -5px;opacity: 0.4;"/>
                 </li>
@@ -206,7 +204,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <hr class="mt-n1" style="opacity: 0.4;margin-bottom: 0;"/>
                     <a class="nav-link" href="/?force_old_ui=1">
 						<span class="icon text-lighter">
@@ -214,7 +212,7 @@
 						</span>
                         {{ $t('navmenu.backToPreviousDesign') }}
                     </a>
-                </li>
+                </li> -->
                 <!-- <li class="nav-item">
                     <router-link class="nav-link" to="/i/web/?a=feed">
                         <span class="fas fa-stream pr-2 text-lighter"></span>

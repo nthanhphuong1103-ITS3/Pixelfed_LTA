@@ -212,14 +212,13 @@
 								</div>
 							</div>
 								<div v-if="loaded && user.hasOwnProperty('id')" class="reactions my-2 pb-1 d-flex align-items-center">
-									<div class="reaction-bar-container mr-2" @mouseleave="showReactionPicker = false">
-										<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+									<div class="reaction-bar-container mr-2">
+										<div class="reaction-popover-bar shadow-lg rounded-pill">
 											<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction('heart', $event)">❤️</button>
 											<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction('like', $event)">👍</button>
 											<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction('haha', $event)">😆</button>
 											<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction('sad', $event)">😢</button>
 											<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction('angry', $event)">😡</button>
-											<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction('unlike', $event)">🚫</button>
 										</div>
 
 										<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">

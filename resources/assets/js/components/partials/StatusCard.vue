@@ -130,7 +130,6 @@
 							<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction(status, 'haha', $event)">😆</button>
 							<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction(status, 'sad', $event)">😢</button>
 							<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction(status, 'angry', $event)">😡</button>
-							<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction(status, 'unlike', $event)">🚫</button>
 						</div>
 
 						<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1">
