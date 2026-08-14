@@ -122,9 +122,39 @@
 			</div>
 
 			<div class="card-body">
-				<div v-if="reactionBar" class="reactions my-1 pb-2">
-					<h3 v-if="status.favourited" class="fas fa-heart text-danger pr-3 m-0 cursor-pointer" title="Like" v-on:click="likeStatus(status, $event);"></h3>
-					<h3 v-else class="fal fa-heart pr-3 m-0 like-btn text-dark cursor-pointer" title="Like" v-on:click="likeStatus(status, $event);"></h3>
+				<div v-if="reactionBar" class="reactions my-1 pb-2 d-flex align-items-center">
+					<div class="reaction-bar-container mr-2" @mouseleave="showReactionPicker = false">
+						<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+							<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction(status, 'heart', $event)">❤️</button>
+							<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction(status, 'like', $event)">👍</button>
+							<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction(status, 'haha', $event)">😆</button>
+							<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction(status, 'sad', $event)">😢</button>
+							<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction(status, 'angry', $event)">😡</button>
+							<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction(status, 'unlike', $event)">🚫</button>
+						</div>
+
+						<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">
+							<span v-if="currentReaction == 'heart' || (status.favourited && !currentReaction)" class="text-danger">
+								<i class="fas fa-heart mr-1"></i> Tim
+							</span>
+							<span v-else-if="currentReaction == 'like'" class="text-primary">
+								<i class="fas fa-thumbs-up mr-1"></i> Thích
+							</span>
+							<span v-else-if="currentReaction == 'haha'">
+								<span class="mr-1">😆</span> Haha
+							</span>
+							<span v-else-if="currentReaction == 'sad'">
+								<span class="mr-1">😢</span> Buồn
+							</span>
+							<span v-else-if="currentReaction == 'angry'">
+								<span class="mr-1">😡</span> Giận
+							</span>
+							<span v-else class="text-dark">
+								<i class="far fa-heart mr-1"></i> Thích
+							</span>
+						</button>
+					</div>
+
 					<h3 v-if="!status.comments_disabled" class="fal fa-comment text-dark pr-3 m-0 cursor-pointer" title="Comment" v-on:click="commentFocus(status, $event)"></h3>
 					<span v-if="status.taggedPeople.length" class="float-right">
 						<span class="font-weight-light small" style="color:#718096">
@@ -232,7 +262,9 @@
 				replyText: '',
 				replyNsfw: false,
 				emoji: window.App.util.emoji,
-				content: undefined
+				content: undefined,
+				showReactionPicker: false,
+				currentReaction: null
 			}
 		},
 
@@ -311,9 +343,23 @@
 				window.location.href = status.media_attachments[0].url;
 			},
 
-			labelRedirect(type) {
-				let url = '/i/redirect?url=' + encodeURI(this.config.features.label.covid.url);
-				window.location.href = url;
+			togglePicker() {
+				this.showReactionPicker = !this.showReactionPicker;
+			},
+
+			setReaction(status, type, event) {
+				this.showReactionPicker = false;
+				let isUnlike = type === 'unlike';
+				this.currentReaction = isUnlike ? null : type;
+				if (isUnlike) {
+					if (status.favourited) {
+						this.likeStatus(status, event);
+					}
+				} else {
+					if (!status.favourited) {
+						this.likeStatus(status, event);
+					}
+				}
 			},
 
 			likeStatus(status, event) {

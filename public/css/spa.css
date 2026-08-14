@@ -22,3 +22,11 @@ body, body.loggedIn, #content, .web-wrapper, .metro-nav, .card, .navbar-laravel 
 .btn-reaction { border: none !important; background: transparent !important; font-size: 24px !important; line-height: 1 !important; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer !important; padding: 4px 6px !important; }
 .btn-reaction:hover { transform: scale(1.45) translateY(-6px); }
 
+
+/* Enforce overflow visible and high z-index for Multi-Reaction Bar */
+.reactions, .card-body, .timeline-status-component, .card { overflow: visible !important; }
+.reaction-bar-container { position: relative !important; display: inline-block !important; z-index: 999 !important; }
+.reaction-popover-bar { position: absolute !important; bottom: 125% !important; left: 0 !important; z-index: 9999 !important; background: #ffffff !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important; border-radius: 50px !important; display: flex !important; flex-direction: row !important; align-items: center !important; padding: 6px 10px !important; white-space: nowrap !important; animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.btn-reaction { border: none !important; background: transparent !important; font-size: 26px !important; line-height: 1 !important; transition: transform 0.15s ease-in-out !important; cursor: pointer !important; padding: 2px 6px !important; margin: 0 2px !important; outline: none !important; }
+.btn-reaction:hover, .btn-reaction:focus { transform: scale(1.4) translateY(-6px) !important; }
+
