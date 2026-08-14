@@ -139,9 +139,12 @@ class ComposeController extends Controller
                 break;
 
             case 'video/mp4':
-                VideoThumbnail::dispatch($media)->onQueue('mmo');
-                $preview_url = '/storage/no-preview.png';
-                $url = '/storage/no-preview.png';
+            case 'video/quicktime':
+            case 'video/webm':
+            case 'video/m4v':
+            case 'video/avi':
+                $preview_url = $media->url().'?v='.time();
+                $url = $media->url().'?v='.time();
                 break;
 
             default:

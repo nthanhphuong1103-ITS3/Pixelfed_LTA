@@ -87,7 +87,7 @@
 						v-on:togglecw="status.sensitive = false"/>
 				</div>
 
-				<div v-else-if="status.pf_type === 'video' || status.type === 'video'" class="w-100">
+				<div v-else-if="status.pf_type === 'video' || status.type === 'video' || (status.media_attachments && status.media_attachments[0] && (status.media_attachments[0].type === 'video' || (status.media_attachments[0].mime && status.media_attachments[0].mime.includes('video'))))" class="w-100">
 					<video-presenter :status="status" v-on:togglecw="status.sensitive = false"></video-presenter>
 				</div>
 
