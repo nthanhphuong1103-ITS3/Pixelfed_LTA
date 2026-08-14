@@ -178,10 +178,7 @@
                                                     <div class="small">{{ $t('navmenu.localFeed') }}</div>
                                                 </router-link>
 
-                                                <router-link v-if="hasNetworkTimeline" class="nav-link text-center" :to="{ name: 'timeline', params: { scope: 'global' } }">
-                                                    <div class="icon text-lighter"><i class="far fa-globe fa-lg"></i></div>
-                                                    <div class="small">{{ $t('navmenu.globalFeed') }}</div>
-                                                </router-link>
+<!-- globalFeed (Liên hợp) tab removed per user request -->
                                             </div>
                                         </li>
 

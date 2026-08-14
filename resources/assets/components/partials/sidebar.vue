@@ -82,19 +82,7 @@
                             <div class="small">{{ $t('navmenu.localFeed') }}</div>
                         </a>
 
-                        <!-- <router-link v-if="hasNetworkTimeline" class="nav-link text-center" :to="{ name: 'timeline', params: { scope: 'global' } }">
-                            <div class="icon text-lighter"><i class="far fa-globe fa-lg"></i></div>
-                            <div class="small">{{ $t('navmenu.globalFeed') }}</div>
-                        </router-link> -->
-                        <a
-                            v-if="hasNetworkTimeline"
-                            class="nav-link text-center"
-                            href="/i/web/timeline/global"
-                            :class="[ $route.path == '/i/web/timeline/global' ? 'router-link-exact-active active' : '' ]"
-                            @click.prevent="goToFeed('global')">
-                            <div class="icon text-lighter"><i class="far fa-globe fa-lg"></i></div>
-                            <div class="small">{{ $t('navmenu.globalFeed') }}</div>
-                        </a>
+                        <!-- globalFeed (Liên hợp) tab removed per user request -->
                     </div>
                     <hr class="mb-0" style="margin-top: -5px;opacity: 0.4;"/>
                 </li>
