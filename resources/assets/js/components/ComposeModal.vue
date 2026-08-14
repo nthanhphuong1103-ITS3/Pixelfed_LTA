@@ -177,13 +177,13 @@
                             </div>
                         </span>
                         <span v-else>
-                            <a v-if="!pageLoading && (page > 1 && page <= 2) || (page == 1 && ids.length != 0) || page == 'cropPhoto'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="nextPage">Next</a>
+                            <a v-if="!pageLoading && (page > 1 && page <= 2) || (page == 1 && ids.length != 0) || page == 'cropPhoto'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="nextPage">Tiếp theo</a>
                             <template v-if="!pageLoading && page == 3" >
                                 <b-spinner v-if="isPosting" small />
-                                <a v-else class="font-weight-bold text-decoration-none" href="#" @click.prevent="compose()">Post</a>
+                                <a v-else class="font-weight-bold text-decoration-none" href="#" @click.prevent="compose()">Đăng bài</a>
                             </template>
-                            <a v-if="!pageLoading && page == 'addText'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="composeTextPost()">Post</a>
-                            <a v-if="!pageLoading && page == 'video-2'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="compose()">Post</a>
+                            <a v-if="!pageLoading && page == 'addText'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="composeTextPost()">Đăng bài</a>
+                            <a v-if="!pageLoading && page == 'video-2'" class="font-weight-bold text-decoration-none" href="#" @click.prevent="compose()">Đăng bài</a>
                         </span>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                                 <div class="media-body">
                                     <div class="form-group">
                                         <label class="font-weight-bold text-muted small d-none">Body</label>
-                                        <textarea class="form-control border-0 rounded-0 no-focus" rows="7" placeholder="What's happening?" style="font-size:18px;resize:none" v-model="composeText" v-on:keyup="composeTextLength = composeText.length"></textarea>
+                                        <textarea class="form-control border-0 rounded-0 no-focus" rows="7" placeholder="Bạn đang nghĩ gì?" style="font-size:18px;resize:none" v-model="composeText" v-on:keyup="composeTextLength = composeText.length"></textarea>
                                         <div class="border-bottom"></div>
                                         <p class="help-text small text-right text-muted mb-0 font-weight-bold">{{composeTextLength}}/{{config.uploader.max_caption_length}}</p>
                                         <p class="mb-0 mt-2">
@@ -249,16 +249,16 @@
                                         </div>
                                         <div class="media-body text-left">
                                             <p class="mb-0">
-                                                <span class="h5 mt-0 font-weight-bold text-primary">New Post</span>
+                                                <span class="h5 mt-0 font-weight-bold text-primary">Đăng ảnh / video mới</span>
                                             </p>
-                                            <p class="mb-0 text-muted">Share up to {{config.uploader.album_limit}} photos or videos</p>
-                                            <p class="mb-0 text-muted small"><span class="font-weight-bold">{{config.uploader.media_types.split(',').map(v => v.split('/')[1]).join(', ')}}</span> allowed up to <span class="font-weight-bold">{{filesize(config.uploader.max_photo_size)}}</span></p>
+                                            <p class="mb-0 text-muted">Chia sẻ ảnh hoặc video (tối đa 3GB)</p>
+                                            <p class="mb-0 text-muted small"><span class="font-weight-bold">{{config.uploader.media_types.split(',').map(v => v.split('/')[1]).join(', ')}}</span> cho phép tải lên tới <span class="font-weight-bold">3GB</span></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="1==0 && config.ab.top == true && media.length == 0" class="card my-md-3 shadow-none border compose-action text-decoration-none text-dark">
+                            <div v-if="media.length == 0" class="card my-md-3 shadow-none border compose-action text-decoration-none text-dark">
                                 <div @click.prevent="addText" class="card-body py-2">
                                     <div class="media">
                                         <div class="mr-3 align-items-center justify-content-center" style="display:inline-flex;width:40px;height:40px;border-radius: 100%;border: 2px solid #008DF5">
@@ -266,12 +266,9 @@
                                         </div>
                                         <div class="media-body text-left">
                                             <p class="mb-0">
-                                                <span class="h5 mt-0 font-weight-bold text-primary">New Text Post</span>
-                                                <sup class="float-right mt-2">
-                                                    <span class="btn btn-outline-lighter p-1 btn-sm font-weight-bold py-0" style="font-size:10px;line-height: 0.6">BETA</span>
-                                                </sup>
+                                                <span class="h5 mt-0 font-weight-bold text-primary">Đăng bài viết văn bản</span>
                                             </p>
-                                            <p class="mb-0 text-muted">Share a text only post</p>
+                                            <p class="mb-0 text-muted">Đăng bài viết chỉ có nội dung chữ / văn bản</p>
                                         </div>
                                     </div>
                                 </div>

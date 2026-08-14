@@ -1916,12 +1916,12 @@ class ApiV1Controller extends Controller
             'file.*' => [
                 'required_without:file',
                 'mimetypes:'.config_cache('pixelfed.media_types'),
-                'max:'.config_cache('pixelfed.max_photo_size'),
+                'max:'.config_cache('pixelfed.max_video_size'),
             ],
             'file' => [
                 'required_without:file.*',
                 'mimetypes:'.config_cache('pixelfed.media_types'),
-                'max:'.config_cache('pixelfed.max_photo_size'),
+                'max:'.config_cache('pixelfed.max_video_size'),
             ],
             'filter_name' => 'nullable|string|max:24',
             'filter_class' => 'nullable|alpha_dash|max:24',
@@ -2142,12 +2142,12 @@ class ApiV1Controller extends Controller
             'file.*' => [
                 'required_without:file',
                 'mimetypes:'.config_cache('pixelfed.media_types'),
-                'max:'.config_cache('pixelfed.max_photo_size'),
+                'max:'.config_cache('pixelfed.max_video_size'),
             ],
             'file' => [
                 'required_without:file.*',
                 'mimetypes:'.config_cache('pixelfed.media_types'),
-                'max:'.config_cache('pixelfed.max_photo_size'),
+                'max:'.config_cache('pixelfed.max_video_size'),
             ],
             'filter_name' => 'nullable|string|max:24',
             'filter_class' => 'nullable|alpha_dash|max:24',

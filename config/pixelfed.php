@@ -240,9 +240,9 @@ return [
         ],
     ],
 
-    'max_collection_length' => (int) env('PF_MAX_COLLECTION_LENGTH', 100),
+    'max_video_size' => (int) env('MAX_VIDEO_SIZE', 3145728),
 
-    'media_types' => env('MEDIA_TYPES', 'image/jpeg,image/jpg,image/png,image/gif'),
+    'media_types' => env('MEDIA_TYPES', 'image/jpeg,image/jpg,image/png,image/gif,image/webp,video/mp4,video/quicktime,video/webm,video/m4v,video/avi'),
 
     'enforce_account_limit' => env('LIMIT_ACCOUNT_SIZE', true),
 
