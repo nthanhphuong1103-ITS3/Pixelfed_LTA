@@ -123,8 +123,8 @@
 
 			<div class="card-body">
 				<div v-if="reactionBar" class="reactions my-1 pb-2 d-flex align-items-center">
-					<div class="reaction-bar-container mr-2" @mouseleave="showReactionPicker = false">
-						<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+					<div class="reaction-bar-container mr-2">
+						<div class="reaction-popover-bar shadow-lg rounded-pill">
 							<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction(status, 'heart', $event)">❤️</button>
 							<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction(status, 'like', $event)">👍</button>
 							<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction(status, 'haha', $event)">😆</button>
@@ -133,7 +133,7 @@
 							<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction(status, 'unlike', $event)">🚫</button>
 						</div>
 
-						<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">
+						<button type="button" class="btn btn-light font-weight-bold rounded-pill px-3 py-1">
 							<span v-if="currentReaction == 'heart' || (status.favourited && !currentReaction)" class="text-danger">
 								<i class="fas fa-heart mr-1"></i> Tim
 							</span>

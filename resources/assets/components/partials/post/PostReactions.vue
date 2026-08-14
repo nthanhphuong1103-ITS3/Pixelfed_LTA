@@ -22,8 +22,8 @@
 		</div>
 
 		<div class="d-flex justify-content-between" style="font-size: 14px !important;">
-			<div class="reaction-bar-container" @mouseleave="showReactionPicker = false">
-				<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+			<div class="reaction-bar-container">
+				<div class="reaction-popover-bar shadow-lg rounded-pill">
 					<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction('heart')">❤️</button>
 					<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction('like')">👍</button>
 					<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction('haha')">😆</button>
@@ -32,7 +32,7 @@
 					<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction('unlike')">🚫</button>
 				</div>
 
-				<button type="button" class="btn btn-light font-weight-bold rounded-pill mr-2" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">
+				<button type="button" class="btn btn-light font-weight-bold rounded-pill mr-2">
 					<span v-if="currentReaction == 'heart' || (status.favourited && !currentReaction)" class="primary">
 						<i class="fas fa-heart mr-md-1 text-danger fa-lg"></i> <span class="d-none d-md-inline">Tim</span>
 					</span>

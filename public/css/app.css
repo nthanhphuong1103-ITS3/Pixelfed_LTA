@@ -50,3 +50,12 @@ body, body.loggedIn, #content, .web-wrapper, .metro-nav, .card, .navbar-laravel 
 .btn-reaction { border: none !important; background: transparent !important; font-size: 26px !important; line-height: 1 !important; transition: transform 0.15s ease-in-out !important; cursor: pointer !important; padding: 2px 6px !important; margin: 0 2px !important; outline: none !important; }
 .btn-reaction:hover, .btn-reaction:focus { transform: scale(1.4) translateY(-6px) !important; }
 
+
+/* Clean Pure CSS Hover Multi-Reaction Bar */
+.reactions, .card-body, .timeline-status-component, .card { overflow: visible !important; }
+.reaction-bar-container { position: relative !important; display: inline-block !important; z-index: 99; }
+.reaction-popover-bar { display: none !important; position: absolute !important; bottom: 120% !important; left: 0 !important; z-index: 99999 !important; background: #ffffff !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important; border-radius: 50px !important; flex-direction: row !important; align-items: center !important; padding: 4px 8px !important; white-space: nowrap !important; }
+.reaction-bar-container:hover .reaction-popover-bar { display: flex !important; animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.btn-reaction { border: none !important; background: transparent !important; font-size: 24px !important; line-height: 1 !important; transition: transform 0.15s ease-in-out !important; cursor: pointer !important; padding: 2px 6px !important; margin: 0 2px !important; outline: none !important; }
+.btn-reaction:hover { transform: scale(1.4) translateY(-5px) !important; }
+
