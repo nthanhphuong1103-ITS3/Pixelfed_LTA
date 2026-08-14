@@ -17,7 +17,7 @@ return [
 	'loops' => false,
 
 	// Text only posts (alpha)
-	'top' => env('EXP_TOP', false),
+	'top' => true,
 
 	// Poll statuses (alpha)
 	'polls' => env('EXP_POLLS', false),

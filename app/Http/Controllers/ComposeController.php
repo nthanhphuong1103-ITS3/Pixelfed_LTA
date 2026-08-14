@@ -516,8 +516,8 @@ class ComposeController extends Controller
     {
         $this->validate($request, [
             'caption' => 'nullable|string|max:'.config_cache('pixelfed.max_caption_length'),
-            'media.*' => 'required',
-            'media.*.id' => 'required|integer|min:1',
+            'media' => 'nullable|array',
+            'media.*.id' => 'required_with:media|integer|min:1',
             'media.*.filter_class' => 'nullable|alpha_dash|max:30',
             'media.*.license' => 'nullable|string|max:140',
             'media.*.alt' => 'nullable|string|max:'.config_cache('pixelfed.max_altext_length'),
@@ -566,7 +566,7 @@ class ComposeController extends Controller
         $license = in_array($request->input('license'), License::keys()) ? $request->input('license') : null;
 
         $visibility = $request->input('visibility');
-        $medias = $request->input('media');
+        $medias = $request->input('media', []);
         $attachments = [];
         $status = new Status;
         $mimes = [];
@@ -575,33 +575,37 @@ class ComposeController extends Controller
         $tagged = $request->input('tagged');
         $optimize_media = (bool) $request->input('optimize_media');
 
-        foreach ($medias as $k => $media) {
-            if ($k + 1 > config_cache('pixelfed.max_album_length')) {
-                continue;
-            }
-            $m = Media::findOrFail($media['id']);
-            if ($m->profile_id !== $profile->id || $m->status_id) {
-                abort(403, 'Invalid media id');
-            }
-            $m->filter_class = in_array($media['filter_class'], Filter::classes()) ? $media['filter_class'] : null;
-            $m->license = $license;
-            $m->caption = isset($media['alt']) ? strip_tags($media['alt']) : null;
-            $m->order = isset($media['cursor']) && is_int($media['cursor']) ? (int) $media['cursor'] : $k;
+        if(is_array($medias)) {
+            foreach ($medias as $k => $media) {
+                if ($k + 1 > config_cache('pixelfed.max_album_length')) {
+                    continue;
+                }
+                $m = Media::findOrFail($media['id']);
+                if ($m->profile_id !== $profile->id || $m->status_id) {
+                    abort(403, 'Invalid media id');
+                }
+                $m->filter_class = in_array($media['filter_class'] ?? null, Filter::classes()) ? $media['filter_class'] : null;
+                $m->license = $license;
+                $m->caption = isset($media['alt']) ? strip_tags($media['alt']) : null;
+                $m->order = isset($media['cursor']) && is_int($media['cursor']) ? (int) $media['cursor'] : $k;
 
-            if ($cw == true || $profile->cw == true) {
-                $m->is_nsfw = $cw;
-                $status->is_nsfw = $cw;
+                if ($cw == true || $profile->cw == true) {
+                    $m->is_nsfw = $cw;
+                    $status->is_nsfw = $cw;
+                }
+                $m->save();
+                $attachments[] = $m;
+                array_push($mimes, $m->mime);
             }
-            $m->save();
-            $attachments[] = $m;
-            array_push($mimes, $m->mime);
         }
 
-        abort_if(empty($attachments), 422);
+        if (empty($attachments) && empty($request->caption)) {
+            abort(422, 'Cannot post an empty status');
+        }
 
-        $mediaType = StatusController::mimeTypeCheck($mimes);
+        $mediaType = !empty($attachments) ? StatusController::mimeTypeCheck($mimes) : 'text';
 
-        if (in_array($mediaType, ['photo', 'video', 'photo:album']) == false) {
+        if (in_array($mediaType, ['photo', 'video', 'photo:album', 'text']) == false) {
             abort(400, __('exception.compose.invalid.album'));
         }
 
@@ -693,7 +697,6 @@ class ComposeController extends Controller
 
     public function storeText(Request $request)
     {
-        abort_unless(config('exp.top'), 404);
         $this->validate($request, [
             'caption' => 'nullable|string|max:'.config_cache('pixelfed.max_caption_length'),
             'cw' => 'nullable|boolean',

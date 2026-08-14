@@ -74,7 +74,9 @@
 				</div> -->
 				<!-- <photo-album-presenter :status="post" v-on:togglecw="post.sensitive = false"/> -->
 
-				<!-- <video-presenter v-else-if="post.pf_type === 'video'" :status="post" v-on:togglecw="post.sensitive = false" /> -->
+				<div v-else-if="post.pf_type === 'video' || post.type === 'video'" class="w-100">
+					<video-presenter :status="post" v-on:togglecw="post.sensitive = false" />
+				</div>
 
 			</div>
 		</div>
