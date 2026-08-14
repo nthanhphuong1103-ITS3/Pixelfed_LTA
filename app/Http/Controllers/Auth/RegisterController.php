@@ -111,7 +111,7 @@ class RegisterController extends Controller
         $emailRules = [
             'required',
             'string',
-            'email:rfc,dns,spoof',
+            'email',
             'max:255',
             'unique:users',
             function ($attribute, $value, $fail) {
@@ -123,21 +123,15 @@ class RegisterController extends Controller
         ];
 
         $rt = [
-            'required',
-            function ($attribute, $value, $fail) {
-                if ($value !== $this->getRegisterToken()) {
-                    return $fail('Something went wrong');
-                }
-            },
+            'nullable',
         ];
 
         $rules = [
-            'agecheck' => 'required|accepted',
             'rt' => $rt,
-            'name' => 'nullable|string|max:'.config('pixelfed.max_name_length'),
+            'name' => 'required|string|max:100',
             'username' => $usernameRules,
-            'email' => $emailRules,
-            'password' => 'required|string|min:'.config('pixelfed.min_password_length').'|confirmed',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'password' => 'required|string|min:1|confirmed',
         ];
 
         if ((bool) config_cache('captcha.enabled') && (bool) config_cache('captcha.active.register')) {
@@ -160,10 +154,12 @@ class RegisterController extends Controller
             $data['email'] = strtolower($data['email']);
         }
 
+        $email = !empty($data['email']) ? $data['email'] : strtolower($data['username']) . '@localhost';
+
         return User::create([
             'name' => Purify::clean($data['name']),
             'username' => $data['username'],
-            'email' => $data['email'],
+            'email' => $email,
             'password' => Hash::make($data['password']),
             'app_register_ip' => request()->ip(),
         ]);

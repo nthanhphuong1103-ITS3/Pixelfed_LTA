@@ -232,7 +232,7 @@
                 @csrf
 
                 <div class="form-group mb-3">
-                    <input id="email" type="email" class="form-control form-control-ig {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('auth.emailAddress') }}" required autofocus>
+                    <input id="email" type="text" class="form-control form-control-ig {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Tên đăng nhập hoặc Email" required autofocus>
                     @if ($errors->has('email'))
                     <span class="invalid-feedback d-block small mt-1">
                         <strong>{{ $errors->first('email') }}</strong>

@@ -205,15 +205,6 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <input id="email" type="email" class="form-control form-control-ig {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="{{ __('auth.emailAddress') }}" required>
-                    @if ($errors->has('email'))
-                        <span class="invalid-feedback d-block small mt-1">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>
-
-                <div class="form-group mb-3">
                     <div class="input-password-group">
                         <input id="password" type="password" class="form-control form-control-ig {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" placeholder="{{ __('auth.password') }}" required>
                         <i class="far fa-eye toggle-password-icon" id="togglePasswordReg" title="Toggle password visibility"></i>
@@ -229,15 +220,6 @@
                     <div class="input-password-group">
                         <input id="password-confirm" type="password" class="form-control form-control-ig" name="password_confirmation" placeholder="{{ __('auth.confirm-password') }}" required>
                         <i class="far fa-eye toggle-password-icon" id="togglePasswordConfirmReg" title="Toggle password visibility"></i>
-                    </div>
-                </div>
-
-                <div class="form-group mb-3">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="agecheck" value="true" id="ageCheck" required>
-                        <label class="custom-control-label text-muted small" for="ageCheck">
-                            {{ __('auth.age') }}
-                        </label>
                     </div>
                 </div>
 

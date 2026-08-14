@@ -68,8 +68,8 @@ class LoginController extends Controller
         }
 
         $rules = [
-            $this->username() => 'required|email',
-            'password' => 'required|string|min:6',
+            'email' => 'required|string',
+            'password' => 'required|string|min:1',
         ];
         $messages = [];
 
@@ -86,6 +86,17 @@ class LoginController extends Controller
             $messages['h-captcha-response.required'] = 'The captcha must be filled';
         }
         $request->validate($rules, $messages);
+    }
+
+    protected function credentials(Request $request)
+    {
+        $login = $request->get('email');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        return [
+            $field => $login,
+            'password' => $request->get('password'),
+        ];
     }
 
     /**
