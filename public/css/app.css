@@ -34,3 +34,11 @@ body, body.loggedIn, #content, .web-wrapper, .metro-nav, .card, .navbar-laravel 
 .btn-primary, .badge-primary { background-color: #0072ce !important; border-color: #0072ce !important; color: #ffffff !important; }
 .btn-primary:hover { background-color: #0052a3 !important; border-color: #0052a3 !important; }
 
+
+/* Multi-Reaction Bar Picker Styles */
+.reaction-bar-container { position: relative; display: inline-block; }
+.reaction-popover-bar { position: absolute; bottom: 110%; left: 0; z-index: 1050; background: #ffffff !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 10px 30px rgba(0,0,0,0.18) !important; border-radius: 50px !important; animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); white-space: nowrap; padding: 4px 8px; }
+@keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(0.85); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.btn-reaction { border: none !important; background: transparent !important; font-size: 24px !important; line-height: 1 !important; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer !important; padding: 4px 6px !important; }
+.btn-reaction:hover { transform: scale(1.45) translateY(-6px); }
+

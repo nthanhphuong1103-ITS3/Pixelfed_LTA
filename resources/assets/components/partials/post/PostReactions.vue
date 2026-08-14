@@ -22,20 +22,38 @@
 		</div>
 
 		<div class="d-flex justify-content-between" style="font-size: 14px !important;">
-			<div>
-				<button type="button" class="btn btn-light font-weight-bold rounded-pill mr-2" @click.prevent="like()">
-					<span v-if="status.favourited" class="primary">
-						<i class="fas fa-heart mr-md-1 text-danger fa-lg"></i>
+			<div class="reaction-bar-container" @mouseleave="showReactionPicker = false">
+				<div v-if="showReactionPicker" class="reaction-popover-bar shadow-lg rounded-pill">
+					<button type="button" class="btn btn-reaction" title="Tim ❤️" @click.prevent="setReaction('heart')">❤️</button>
+					<button type="button" class="btn btn-reaction" title="Thích 👍" @click.prevent="setReaction('like')">👍</button>
+					<button type="button" class="btn btn-reaction" title="Haha 😆" @click.prevent="setReaction('haha')">😆</button>
+					<button type="button" class="btn btn-reaction" title="Buồn 😢" @click.prevent="setReaction('sad')">😢</button>
+					<button type="button" class="btn btn-reaction" title="Giận 😡" @click.prevent="setReaction('angry')">😡</button>
+					<button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" @click.prevent="setReaction('unlike')">🚫</button>
+				</div>
+
+				<button type="button" class="btn btn-light font-weight-bold rounded-pill mr-2" @click.prevent="togglePicker()" @mouseenter="showReactionPicker = true">
+					<span v-if="currentReaction == 'heart' || (status.favourited && !currentReaction)" class="primary">
+						<i class="fas fa-heart mr-md-1 text-danger fa-lg"></i> <span class="d-none d-md-inline">Tim</span>
+					</span>
+					<span v-else-if="currentReaction == 'like'">
+						<i class="fas fa-thumbs-up mr-md-1 text-primary fa-lg"></i> <span class="d-none d-md-inline">Thích</span>
+					</span>
+					<span v-else-if="currentReaction == 'haha'">
+						<span class="mr-md-1 fa-lg">😆</span> <span class="d-none d-md-inline">Haha</span>
+					</span>
+					<span v-else-if="currentReaction == 'sad'">
+						<span class="mr-md-1 fa-lg">😢</span> <span class="d-none d-md-inline">Buồn</span>
+					</span>
+					<span v-else-if="currentReaction == 'angry'">
+						<span class="mr-md-1 fa-lg">😡</span> <span class="d-none d-md-inline">Giận</span>
 					</span>
 					<span v-else>
 						<i class="far fa-heart mr-md-2"></i>
-					</span>
-					<span v-if="likesCount && !hideCounts">
-						{{ count(likesCount)}}
-						<span class="d-none d-md-inline">{{ likesCount == 1 ? $t('common.like') : $t('common.likes') }}</span>
-					</span>
-					<span v-else>
 						<span class="d-none d-md-inline">{{ $t('common.like') }}</span>
+					</span>
+					<span v-if="likesCount && !hideCounts" class="ml-1">
+						({{ count(likesCount)}})
 					</span>
 				</button>
 
@@ -126,7 +144,9 @@
 				isReblogging: false,
 				isBookmarking: false,
 				owner: false,
-				license: false
+				license: false,
+				showReactionPicker: false,
+				currentReaction: null
 			}
 		},
 
@@ -161,6 +181,25 @@
 		methods: {
 			count(val) {
 				return App.util.format.count(val);
+			},
+
+			togglePicker() {
+				this.showReactionPicker = !this.showReactionPicker;
+			},
+
+			setReaction(type) {
+				this.showReactionPicker = false;
+				if (type === 'unlike') {
+					this.currentReaction = null;
+					if (this.status.favourited) {
+						this.$emit('unlike');
+					}
+				} else {
+					this.currentReaction = type;
+					if (!this.status.favourited) {
+						this.$emit('like');
+					}
+				}
 			},
 
 			like() {

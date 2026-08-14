@@ -62,13 +62,23 @@
   @endswitch
   <div class="card-body">
     <div class="reactions my-1">
-      <form class="d-inline-flex like-form pr-3" method="post" action="/i/like" style="display: inline;" data-id="{{$item->id}}" data-action="like" data-count="{{$item->likes_count}}">
-        @csrf
-        <input type="hidden" name="item" value="{{$item->id}}">
-        <button class="btn btn-link text-dark p-0" type="submit" title="Like!">
-          <h3 class="far fa-heart status-heart m-0"></h3>
-        </button>
-      </form>
+      <div class="d-inline-flex reaction-bar-container pr-3" onmouseleave="this.querySelector('.reaction-popover-bar').style.display='none'">
+        <div class="reaction-popover-bar shadow-lg rounded-pill" style="display:none;">
+          <button type="button" class="btn btn-reaction" title="Tim ❤️" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">❤️</button>
+          <button type="button" class="btn btn-reaction" title="Thích 👍" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">👍</button>
+          <button type="button" class="btn btn-reaction" title="Haha 😆" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😆</button>
+          <button type="button" class="btn btn-reaction" title="Buồn 😢" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😢</button>
+          <button type="button" class="btn btn-reaction" title="Giận 😡" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">😡</button>
+          <button type="button" class="btn btn-reaction" title="Bỏ cảm xúc 🚫" onclick="this.closest('.reaction-bar-container').querySelector('.like-form button').click();">🚫</button>
+        </div>
+        <form class="like-form" method="post" action="/i/like" style="display: inline;" data-id="{{$item->id}}" data-action="like" data-count="{{$item->likes_count}}">
+          @csrf
+          <input type="hidden" name="item" value="{{$item->id}}">
+          <button class="btn btn-link text-dark p-0" type="submit" title="Bấm hoặc Rê chuột để chọn Cảm Xúc" onmouseenter="this.closest('.reaction-bar-container').querySelector('.reaction-popover-bar').style.display='flex'">
+            <h3 class="far fa-heart status-heart m-0"></h3>
+          </button>
+        </form>
+      </div>
       <h3 class="far fa-comment pr-3 status-comment-focus" title="Comment"></h3>
       <form class="d-inline-flex share-form pr-3" method="post" action="/i/share" style="display: inline;" data-id="{{$item->id}}" data-action="share" data-count="{{$item->shares_count}}">
         @csrf
