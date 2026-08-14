@@ -395,12 +395,13 @@
                     <div v-else-if="page == 3" class="w-100 h-100">
                         <div class="border-bottom mt-2">
                             <div class="media px-3">
-                                <img :src="media[0].preview_url" width="42px" height="42px" class="mr-2">
+                                <video v-if="media[0] && (media[0].type == 'video' || (media[0].mime && media[0].mime.includes('video')))" :src="media[0].url || media[0].preview_url" width="42px" height="42px" class="mr-2 rounded" style="object-fit: cover;"></video>
+                                <img v-else-if="media[0]" :src="media[0].preview_url" width="42px" height="42px" class="mr-2 rounded" style="object-fit: cover;">
                                 <div class="media-body">
                                     <div class="form-group">
-                                        <label class="font-weight-bold text-muted small d-none">Caption</label>
+                                        <label class="font-weight-bold text-muted small d-none">Mô tả</label>
                                         <vue-tribute :options="tributeSettings">
-                                            <textarea class="form-control border-0 rounded-0 no-focus" rows="3" placeholder="Write a caption..." style="" v-model="composeText" v-on:keyup="composeTextLength = composeText.length"></textarea>
+                                            <textarea class="form-control border-0 rounded-0 no-focus" rows="3" placeholder="Viết mô tả bài đăng..." style="" v-model="composeText" v-on:keyup="composeTextLength = composeText.length"></textarea>
                                         </vue-tribute>
                                         <p class="help-text small text-right text-muted mb-0">{{composeTextLength}}/{{config.uploader.max_caption_length}}</p>
                                     </div>
@@ -409,7 +410,7 @@
                         </div>
                         <div class="border-bottom">
                             <p class="px-4 mb-0 py-2 cursor-pointer d-flex justify-content-between" @click="showMediaDescriptionsCard()">
-                                <span>Alt Text</span>
+                                <span>Văn bản thay thế (Alt Text)</span>
                                 <span>
                                     <i v-if="media && media.filter(m => m.alt).length == media.length" class="fas fa-check-circle fa-lg text-success"></i>
                                     <i v-else class="fas fa-chevron-right fa-lg text-lighter"></i>
@@ -419,7 +420,7 @@
                         <div class="border-bottom px-4 mb-0 py-2">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <div class="text-dark ">Sensitive/NSFW Media</div>
+                                    <div class="text-dark ">Nội dung nhạy cảm (NSFW)</div>
                                 </div>
                                 <div>
                                     <div class="custom-control custom-switch" style="z-index: 9999;">
@@ -432,7 +433,7 @@
                             <div v-if="nsfw">
                                 <textarea
                                     class="form-control mt-3"
-                                    placeholder="Add an optional content warning or spoiler text"
+                                    placeholder="Thêm cảnh báo nội dung hoặc văn bản spoiler"
                                     maxlength="140"
                                     v-model="spoilerText">
                                 </textarea>
@@ -441,11 +442,11 @@
                             </div>
                         </div>
                         <div class="border-bottom">
-                            <p class="px-4 mb-0 py-2 cursor-pointer" @click="showTagCard()">Tag people</p>
+                            <p class="px-4 mb-0 py-2 cursor-pointer" @click="showTagCard()">Gắn thẻ người dùng</p>
                         </div>
                         <div class="border-bottom">
                             <p class="px-4 mb-0 py-2 cursor-pointer" @click="showCollectionCard()">
-                                <span>Add to Collection <span class="ml-2 badge badge-primary">NEW</span></span>
+                                <span>Thêm vào bộ sưu tập <span class="ml-2 badge badge-primary">MỚI</span></span>
                                 <span class="float-right">
                                     <span v-if="collectionsSelected.length" href="#" class="btn btn-outline-secondary btn-sm small mr-3 mt-n1 disabled" style="font-size:10px;padding:3px 5px;text-transform: uppercase" disabled>
                                         {{collectionsSelected.length}}
@@ -456,7 +457,7 @@
                         </div>
                         <div class="border-bottom">
                             <p class="px-4 mb-0 py-2 cursor-pointer" @click="showLicenseCard()">
-                                <span>Add license</span>
+                                <span>Thêm bản quyền (License)</span>
                                 <span class="float-right">
                                     <a v-if="licenseTitle" href="#" @click.prevent="showLicenseCard()" class="btn btn-outline-secondary btn-sm small mr-3 mt-n1 disabled" style="font-size:10px;padding:3px;text-transform: uppercase" disabled>{{licenseTitle}}</a>
                                     <a href="#" @click.prevent="showLicenseCard()" class="text-decoration-none"><i class="fas fa-chevron-right fa-lg text-lighter"></i></a>
@@ -464,28 +465,24 @@
                             </p>
                         </div>
                         <div class="border-bottom">
-                            <p class="px-4 mb-0 py-2 cursor-pointer" @click="showLocationCard()" v-if="!place">Add location</p>
+                            <p class="px-4 mb-0 py-2 cursor-pointer" @click="showLocationCard()" v-if="!place">Thêm vị trí</p>
                             <p v-else class="px-4 mb-0 py-2">
-                                <span class="text-lighter">Location:</span> {{place.name}}, {{place.country}}
+                                <span class="text-lighter">Vị trí:</span> {{place.name}}, {{place.country}}
                                 <span class="float-right">
-                                    <a href="#" @click.prevent="showLocationCard()" class="btn btn-outline-secondary btn-sm small mr-2" style="font-size:10px;padding:3px;text-transform: uppercase">Edit</a>
-                                    <a href="#" @click.prevent="place = false" class="btn btn-outline-secondary btn-sm small" style="font-size:10px;padding:3px;text-transform: uppercase">Remove</a>
+                                    <a href="#" @click.prevent="showLocationCard()" class="btn btn-outline-secondary btn-sm small mr-2" style="font-size:10px;padding:3px;text-transform: uppercase">Sửa</a>
+                                    <a href="#" @click.prevent="place = false" class="btn btn-outline-secondary btn-sm small" style="font-size:10px;padding:3px;text-transform: uppercase">Xóa</a>
                                 </span>
                             </p>
                         </div>
                         <div class="border-bottom">
                             <p class="px-4 mb-0 py-2">
-                                <span>Audience</span>
+                                <span>Quyền riêng tư / Đối tượng</span>
                                 <span class="float-right">
                                     <a href="#" @click.prevent="showVisibilityCard()" class="btn btn-outline-secondary btn-sm small mr-3 mt-n1 disabled" style="font-size:10px;padding:3px;text-transform: uppercase" disabled>{{visibilityTag}}</a>
                                     <a href="#" @click.prevent="showVisibilityCard()" class="text-decoration-none"><i class="fas fa-chevron-right fa-lg text-lighter"></i></a>
                                 </span>
                             </p>
                         </div>
-                        <!-- <div class="cursor-pointer border-bottom px-4 mb-0 py-2" @click.prevent="showMediaDescriptionsCard()">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="text-dark">Media Descriptions</div>
                                     <p class="text-muted small mb-0">Describe your photos for people with visual impairments.</p>
                                 </div>
                                 <div>
@@ -1362,8 +1359,8 @@ export default {
                             return;
                         }
                     }
-                    if(this.media.length == 0) {
-                        swal('Whoops!', 'You need to add media before you can save this!', 'warning');
+                    if(this.media.length == 0 && (!this.composeText || !this.composeText.trim().length)) {
+                        swal('Thông báo', 'Bạn cần nhập nội dung chữ hoặc đính kèm ảnh/video để đăng bài!', 'warning');
                         return;
                     }
                     if(this.composeText == 'Add optional caption...') {
@@ -1393,11 +1390,8 @@ export default {
 
                     axios.post('/api/compose/v0/publish', data)
                     .then(res => {
-                        if(location.pathname === '/i/web/compose' && res.data && res.data.length) {
-                            location.href = '/i/web/post/' + res.data.split('/').slice(-1)[0];
-                        } else {
-                            location.href = res.data;
-                        }
+                        $('#composeModal').modal('hide');
+                        window.location.href = '/i/web';
                     }).catch(err => {
                         switch(err.response.status) {
                             case 400:
@@ -1451,8 +1445,8 @@ export default {
                     };
                     axios.post('/api/compose/v0/publish/text', data)
                     .then(res => {
-                        let data = res.data;
-                        window.location.href = data;
+                        $('#composeModal').modal('hide');
+                        window.location.href = '/i/web';
                     }).catch(err => {
                         let msg = err.response.data.message ? err.response.data.message : 'An unexpected error occured.'
                         swal('Oops, something went wrong!', msg, 'error');
