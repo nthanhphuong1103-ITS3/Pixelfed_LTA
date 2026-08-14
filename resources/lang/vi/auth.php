@@ -13,8 +13,8 @@ return [
     'register'         =>   'Đăng ký',
     'reset'            =>   'Đặt lại mật khẩu',
 
-    'name'             =>   'Họ và tên',
-    'username'         =>   'Tên người dùng',
+    'name'             =>   'Tên người dùng',
+    'username'         =>   'Tài khoản đăng nhập',
     'confirm-password' =>   'Xác nhận mật khẩu',
 
     'age'              =>   'Tôi đã đủ 16 tuổi trở lên',

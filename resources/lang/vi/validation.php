@@ -77,8 +77,8 @@ return [
     'url'                  => 'Trường :attribute không phải là một URL hợp lệ.',
 
     'attributes' => [
-        'name'                  => 'Họ tên',
-        'username'              => 'Tên người dùng',
+        'name'                  => 'Tên người dùng',
+        'username'              => 'Tài khoản đăng nhập',
         'email'                 => 'Địa chỉ E-Mail',
         'first_name'            => 'Tên',
         'last_name'             => 'Họ',
